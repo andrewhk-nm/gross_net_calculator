@@ -42,8 +42,8 @@ if __name__ == '__main__':
 
     ans = gross_net_calculator(dollars, fed, state, penalty)
 
-    print('If the desired net amount is {} dollars, then gross amount needed is {}'.format(dollars, ans[0]))
-    print('If a gross amount of {} dollars is requested, the net amount will be {}'.format(dollars, ans[1]))
+    print('If the desired net amount is {} dollars, then gross amount needed is {}'.format(dollars, ans.gross))
+    print('If a gross amount of {} dollars is requested, the net amount will be {}'.format(dollars, ans.net))
     print('Tax rates used: Fed={}%, State={}%, Penalty={}%'.format(fed, state, penalty))
 
 
