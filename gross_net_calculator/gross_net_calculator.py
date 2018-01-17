@@ -2,6 +2,8 @@
     return the gross or net amount.
 """
 # TDD
+# Use tkinter
+# TODO use integers instead of Decimals, apparently.
 from decimal import *
 from collections import namedtuple
 
@@ -42,8 +44,8 @@ if __name__ == '__main__':
 
     ans = gross_net_calculator(dollars, fed, state, penalty)
 
-    print('If the desired net amount is {} dollars, then gross amount needed is {}'.format(dollars, ans.gross))
-    print('If a gross amount of {} dollars is requested, the net amount will be {}'.format(dollars, ans.net))
-    print('Tax rates used: Fed={}%, State={}%, Penalty={}%'.format(fed, state, penalty))
+    print('\nTax rates used: Fed={}%, State={}%, Penalty={}%'.format(fed, state, penalty))
+    print('\nnet({}) -> gross({})\n\nIf the desired net amount is {} dollars, then gross amount needed is {}'.format(dollars, ans.gross, dollars, ans.gross))
+    print('\ngross({}) -> net({})\n\nIf a gross amount of {} dollars is requested, the net amount will be {}'.format(dollars, ans.net, dollars, ans.net))
     input('Press <ENTER> to quit.')
 
