@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>229bab43-ffad-4a78-9928-e360a0969d2b</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>gross_net_calculator.py</StartupFile>
+    <StartupFile>gross_net_gui.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -23,6 +23,12 @@
   <ItemGroup>
     <Compile Include="gross_net_calculator.py" />
     <Compile Include="gross_net_calculator_test1.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="gross_net_gui.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="gross_net_gui_test1.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
