@@ -30,10 +30,16 @@ class Application(tk.Frame):
                               command=root.destroy)
         self.quit.pack(side='bottom')
 
-        # Dollars input box and label
-        self.dollars_label = tk.Label(self.input_frame, text='Enter dollars to convert')
-        self.dollars = tk.Text(self)
+        # Dollars Frame
+        self.dollars_frame = tk.Frame(self.input_frame)
+        self.dollars_frame.pack(side='top')
+
+        # Dollars input box label
+        self.dollars_label = tk.Label(self.dollars_frame, text='Enter dollar amount to convert')
         self.dollars_label.pack(side='left')
+        
+        # Dollars input box
+        self.dollars = tk.Text(self.dollars_frame, height='1')
         self.dollars.pack(side='right')
 
         # Output Frame
