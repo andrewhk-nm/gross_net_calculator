@@ -31,14 +31,26 @@ class Application(tk.Frame):
         self.dollars_label.pack(side='left')
         self.dollars.pack(side='right')
 
+        # Gross Output box
+        self.gross_output = tk.Label(self, text='Gross=')
+        self.gross_output.pack(side='bottom')
+
+        # Net Output box
+        self.net_output = tk.Label(self, text='Net=')
+        self.net_output.pack(side='bottom')
+
 
         
 
     def say_hi(self):
         print('hi there, everyone! The textbox says {}'.format(self.dollars.get("1.0", "end")))
-        ans = gncalc(int(self.dollars.get('1.0', 'end').strip()), 24, 4, 0)
+        ans = gncalc(self.dollars.get('1.0', 'end').strip(), 24, 4, 0)
         print('ans={}'.format(ans))
         # self.dollars.insert('1.0', str(ans))
+        self.gross_output['text'] = ans[0]
+        self.net_output['text'] = ans[1]
+
+
 
 root = tk.Tk()
 app = Application(master=root)
