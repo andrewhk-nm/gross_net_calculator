@@ -14,11 +14,16 @@ class Application(tk.Frame):
         self.create_widgets()
 
     def create_widgets(self):
-        # Hello Button
-        self.hi_there = tk.Button(self)
-        self.hi_there['text'] = 'Hello World\n(click me)'
-        self.hi_there['command'] = self.say_hi
-        self.hi_there.pack(side='top')
+        # Input Frame
+        self.input_frame = tk.Frame(self) 
+        self.input_frame.pack(side='top')
+                
+        
+        # Calculate Button (input_frame)
+        self.hi_there = tk.Button(self.input_frame)
+        self.hi_there['text'] = 'Calculate Gross/Net'
+        self.hi_there['command'] = self.calc_gross_net
+        self.hi_there.pack(side='bottom')
 
         # Quit Button
         self.quit = tk.Button(self, text='QUIT', fg='red', 
@@ -26,23 +31,43 @@ class Application(tk.Frame):
         self.quit.pack(side='bottom')
 
         # Dollars input box and label
-        self.dollars_label = tk.Label(self, text='Enter dollars to convert')
+        self.dollars_label = tk.Label(self.input_frame, text='Enter dollars to convert')
         self.dollars = tk.Text(self)
         self.dollars_label.pack(side='left')
         self.dollars.pack(side='right')
 
+        # Output Frame
+        self.output_frame = tk.Frame(self) 
+        self.output_frame.pack(side='bottom')
+
+        # Gross Frame
+        self.gross_frame = tk.Frame(self.output_frame)
+        self.gross_frame.pack(side='left')
+
+        # Net Frame
+        self.net_frame = tk.Frame(self.output_frame)
+        self.net_frame.pack(side='right')
+        
+        # Gross Output Label
+        self.gross_output_label = tk.Label(self.gross_frame, text='Gross=')
+        self.gross_output_label.pack(side='top')
+
         # Gross Output box
-        self.gross_output = tk.Label(self, text='Gross=')
+        self.gross_output = tk.Label(self.gross_frame, text='Gross')
         self.gross_output.pack(side='bottom')
 
+        # Net Output Label
+        self.net_output_label = tk.Label(self.net_frame, text='Net=')
+        self.net_output_label.pack(side='top')
+
         # Net Output box
-        self.net_output = tk.Label(self, text='Net=')
+        self.net_output = tk.Label(self.net_frame, text='Net')
         self.net_output.pack(side='bottom')
 
 
         
 
-    def say_hi(self):
+    def calc_gross_net(self):
         print('hi there, everyone! The textbox says {}'.format(self.dollars.get("1.0", "end")))
         ans = gncalc(self.dollars.get('1.0', 'end').strip(), 24, 4, 0)
         print('ans={}'.format(ans))
