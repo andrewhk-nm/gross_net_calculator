@@ -13,7 +13,23 @@ class Application(tk.Frame):
         self.pack()
         self.create_widgets()
 
+    def keypress(self, key):
+        """ Handles keypresses from the input boxes
+        """
+        print('key={}'.format(key))
+        self.calc_gross_net()
+
+    def validate(self, newtext):
+        """ Handles keypresses during the validation portion.
+        """
+        print('validate={}'.format(newtext))
+        self.calc_gross_net()
+        return True
+
     def create_widgets(self):
+
+        vcmd = self.register(self.validate)
+        #vcmd = app.register(self.validate)
 
         # Quit Button
         self.quit = tk.Button(self, text='QUIT', fg='red', 
@@ -23,61 +39,47 @@ class Application(tk.Frame):
         # Input Frame
         self.input_frame = tk.Frame(self) 
         self.input_frame.pack(side='top')
-                
-        # Tax Rates Frame (input_frame)
-        self.tax_rates_frame = tk.Frame(self.input_frame)
-        self.tax_rates_frame.pack()
+
+        # Dollars input box label (input_frame)
+        self.dollars_label = tk.Label(self.input_frame, text='Enter dollar amount to convert')
+        self.dollars_label.grid(sticky='E', row=0, column=0)
+        
+        # Dollars input box (input_frame)
+        self.dollars = tk.Entry(self.input_frame, width='20', validate='key', validatecommand=(vcmd, '%P'))
+        self.dollars.grid(sticky='W', row=0, column=1)
+        #self.dollars.bind('<Key>', self.keypress)
 
         # Fed Tax Label
-        self.fed_tax_label = tk.Label(self.tax_rates_frame, text='Federal Tax Rate')
-        #self.fed_tax_label.pack(side='left')
-        self.fed_tax_label.grid(sticky='E', row=0, column=0)
+        self.fed_tax_label = tk.Label(self.input_frame, text='Federal Tax Rate')
+        self.fed_tax_label.grid(sticky='E', row=1, column=0)
 
         # Fed Tax input text box
-        self.fed_tax_text = tk.Text(self.tax_rates_frame, height='1')
-        #self.fed_tax_text.pack(side='right')
-        self.fed_tax_text.grid(sticky='W', row=0, column=1)
+        self.fed_tax_text = tk.Entry(self.input_frame, width='20')
+        self.fed_tax_text.grid(sticky='W', row=1, column=1)
         
         # Fed Penalty Tax Label
-        self.fed_penalty_tax_label = tk.Label(self.tax_rates_frame, text='Federal Tax Penalty Rate')
-        #self.fed_penalty_tax_label.pack(side='left')
-        self.fed_penalty_tax_label.grid(sticky='E', row=1, column=0)
+        self.fed_penalty_tax_label = tk.Label(self.input_frame, text='Federal Tax Penalty Rate')
+        self.fed_penalty_tax_label.grid(sticky='E', row=2, column=0)
 
         # Fed Penalty Tax input text box
-        self.fed_penalty_tax_text = tk.Text(self.tax_rates_frame, height='1')
-        #self.fed_penalty_tax_text.pack(side='right')
-        self.fed_penalty_tax_text.grid(sticky='W', row=1, column=1)
+        self.fed_penalty_tax_text = tk.Entry(self.input_frame, width='20')
+        self.fed_penalty_tax_text.grid(sticky='W', row=2, column=1)
 
         # State Tax Label
-        self.state_tax_label = tk.Label(self.tax_rates_frame, text='State Tax Rate')
-        #self.state_tax_label.pack(side='left')
-        self.state_tax_label.grid(sticky='E', row=2, column=0)
+        self.state_tax_label = tk.Label(self.input_frame, text='State Tax Rate')
+        self.state_tax_label.grid(sticky='E', row=3, column=0)
         
         # State Tax input text box
-        self.state_tax_text = tk.Text(self.tax_rates_frame, height='1')
-        #self.state_tax_text.pack(side='right')
-        self.state_tax_text.grid(sticky='W', row=2, column=1)
+        self.state_tax_text = tk.Entry(self.input_frame, width='20')
+        self.state_tax_text.grid(sticky='W', row=3, column=1)
                 
-        # Dollars Frame (input_frame)
-        self.dollars_frame = tk.Frame(self.input_frame)
-        self.dollars_frame.pack(side='top')
-        #self.dollars_frame.grid(sticky='E')
-
-        # Dollars input box label (dollars_frame)
-        self.dollars_label = tk.Label(self.dollars_frame, text='Enter dollar amount to convert')
-        self.dollars_label.pack(side='left')
-        #self.dollars_label.grid(sticky='E')
         
-        # Dollars input box (dollars_frame)
-        self.dollars = tk.Text(self.dollars_frame, height='1')
-        self.dollars.pack(side='right')
-        #self.dollars.grid(sticky='W', column=1)
 
         # Calculate Button (input_frame)
         self.hi_there = tk.Button(self.input_frame)
         self.hi_there['text'] = 'Calculate Gross/Net'
         self.hi_there['command'] = self.calc_gross_net
-        self.hi_there.pack(side='bottom')
+        self.hi_there.grid()
 
         # Output Frame
         self.output_frame = tk.Frame(self) 
@@ -107,12 +109,19 @@ class Application(tk.Frame):
         self.net_output = tk.Label(self.net_frame, text='Net')
         self.net_output.pack(side='bottom')
 
+        # Add text to all the grid'd text boxes
+        self.dollars.insert(0, '0.00')
+        self.fed_tax_text.insert(0, '0.00')
+        self.fed_penalty_tax_text.insert(0, '0.00')
+        self.state_tax_text.insert(0, '0.00')
+
+
     def calc_gross_net(self):
-        print('hi there, everyone! The textbox says {}'.format(self.dollars.get("1.0", "end")))
-        d, f, p, s = (self.dollars.get('1.0', 'end').strip(),
-                      self.fed_tax_text.get('1.0', 'end').strip(),
-                      self.fed_penalty_tax_text.get('1.0', 'end').strip(),
-                      self.state_tax_text.get('1.0', 'end').strip(),
+        print('hi there, everyone! The textbox says {}'.format(self.dollars.get()))
+        d, f, p, s = (self.dollars.get().strip(),
+                      self.fed_tax_text.get().strip(),
+                      self.fed_penalty_tax_text.get().strip(),
+                      self.state_tax_text.get().strip(),
                       )
         ans = gncalc(dollars=d, fed=f, state=s, penalty=p)
         #ans = gncalc(dollars=d, fed=24, state=4, penalty=0)
@@ -122,25 +131,12 @@ class Application(tk.Frame):
         self.net_output['text'] = ans[1]
 
 
-class ApplicationGrid(tk.Frame):
-    def __init__(self, master=None):
-        super().__init__(master)
-        self.pack()
-        self.create_widgets()        
-        
-    def create_widgets(self):
-        self.test_label = tk.Label(self, text='test label').grid(row=0, column=0)
-        self.text_text = tk.Entry(self).grid(row=0, column=1)
-        self.test_label2 = tk.Label(self, text='test label2').grid(row=1, column=0)
-        self.text_text2 = tk.Entry(self).grid(row=1, column=1)
 
 
-
-
-
-
-
-root = tk.Tk()
-app = Application(master=root)
-app.mainloop()
-print('Exiting app.mainloop()')
+if __name__ == '__main__':
+    root = tk.Tk()
+    app = Application(master=root)
+    
+    #vcmd = root.register(validate)
+    app.mainloop()
+    print('Exiting app.mainloop()')
