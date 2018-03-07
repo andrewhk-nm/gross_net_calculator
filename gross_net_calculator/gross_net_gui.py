@@ -73,8 +73,6 @@ class Application(tk.Frame):
         self.state_tax_text = tk.Entry(self.input_frame, width='20')
         self.state_tax_text.grid(sticky='W', row=3, column=1)
                 
-        
-
         # Calculate Button (input_frame)
         self.hi_there = tk.Button(self.input_frame)
         self.hi_there['text'] = 'Calculate Gross/Net'
