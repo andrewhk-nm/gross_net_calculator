@@ -16,8 +16,15 @@ def gross_net_calculator(dollars, fed=0, state=0, penalty=0):
          fed=24 is 24%
          state=2.3 is 2.3%
     
-    Returns a tuple with multiple dollar amounts.
-                (gross, net, fed_dollars, state_dollars, penalty_dollars)
+    Returns tuples with multiple dollar amounts, as well as display text for pretty
+        printing.
+            The first one assumes the input dollars is a Net amount.
+            The second assumes the input dollars is a Gross amount. 
+               ((gross_dollars, fed_dollars, state_dollars, penalty_dollars, printable_summary),
+                (net_dollars, fed_dollars, state_dollars, penalty_dollars, printable_summary)
+               ) 
+
+                
 
     gross is the answer if dollars is the "net" amount desired given the tax
     rates.
@@ -32,7 +39,8 @@ def gross_net_calculator(dollars, fed=0, state=0, penalty=0):
     state = Decimal(state)
     penalty = Decimal(penalty)
 
-    GrossNet = namedtuple('GrossNet', 'gross net fed_dollars state_dollars penalty_dollars')
+    #GrossNet = namedtuple('GrossNet', 'gross net fed_dollars state_dollars penalty_dollars')
+    GrossNet = namedtuple('GrossNet', 'gross net')
 
     # convert to decimal represenation of the percentage
     fed = fed / 100
