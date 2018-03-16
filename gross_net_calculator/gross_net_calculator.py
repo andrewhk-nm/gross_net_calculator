@@ -39,8 +39,7 @@ def gross_net_calculator(dollars, fed=0, state=0, penalty=0):
     state = Decimal(state)
     penalty = Decimal(penalty)
 
-    #GrossNet = namedtuple('GrossNet', 'gross net fed_dollars state_dollars penalty_dollars')
-    #GrossNet = namedtuple('GrossNet', 'gross net')
+    # These are the named tuples for the output
     Gn_shell_type = namedtuple('Gross_Net_Shell', 'input_was_gross input_was_net')
     Gn_output_type = namedtuple('Gross_Net_Output', 'output_dollars federal state fed_penalty summary')
 
