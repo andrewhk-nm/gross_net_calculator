@@ -52,11 +52,6 @@ def gross_net_calculator(dollars, fed=0, state=0, penalty=0):
     gross = dollars / (1 - (fed + state + penalty))
     net = dollars - (dollars * fed) - (dollars * state) - (dollars * penalty)
 
-    # Decimal(22.824638).quantize(Decimal('.01'), rounding=ROUND_HALF_DOWN)
-    # TODO: label the tax dollar amounts better,
-    #       because it will depend on if the input was gross or net
-    #       so I'll have two sets of dollar amounts in the output.
-
     # create a named tuple in the custom output format that will show all related info
     # when assuming the input dollars is the gross amount
     input_was_gross = Gn_output_type(Decimal(net).quantize(Decimal('.01'), rounding=ROUND_HALF_DOWN),
@@ -99,6 +94,13 @@ and a {penalty_pct:.2f}% Federal Penalty tax is ${penalty_dollars:.2f}.'''.forma
                                   )
     shell = Gn_shell_type(input_was_gross, input_was_net)
 
+    # Print the summaries
+    print('\n')
+    print(shell.input_was_gross.summary)
+    print('\n')
+    print(shell.input_was_net.summary)
+    print('\n')
+    
     return shell
 
 ##    return GrossNet(gross.quantize(Decimal('.01'), rounding=ROUND_HALF_DOWN),
